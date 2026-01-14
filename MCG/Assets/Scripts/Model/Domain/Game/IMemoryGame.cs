@@ -1,5 +1,6 @@
 using MCG.Model.Domain.Board;
 using MCG.Model.Domain.Cards;
+using MCG.Services;
 
 namespace MCG.Model.Domain.Game
 {
@@ -10,6 +11,7 @@ namespace MCG.Model.Domain.Game
     public interface IMemoryGame
     {
         IBoard Board { get; }
+        IScoreService ScoreService { get; }
 
         void SelectCard(ICard card);
 

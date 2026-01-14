@@ -1,5 +1,6 @@
 using MCG.Model.Domain.Board;
 using MCG.Model.Domain.Cards;
+using MCG.Services;
 using System.Collections.Generic;
 
 namespace MCG.Model.Domain.Game
@@ -7,6 +8,7 @@ namespace MCG.Model.Domain.Game
     public class MemoryGame : IMemoryGame
     {
         public IBoard Board { get; private set; }
+        public IScoreService ScoreService { get; private set; }
         public event CardEventHandler OnCardRevealed;
         public event CardPairEventHandler OnCardMatched;
         public event CardPairEventHandler OnCardMismatched;
@@ -16,9 +18,10 @@ namespace MCG.Model.Domain.Game
         private readonly Queue<ICard> _selectedCardsQueue = new Queue<ICard>();
         private const int MAX_SELECTION = 2;
 
-        public MemoryGame(IBoard board)
+        public MemoryGame(IBoard board, IScoreService scoreService)
         {
             Board = board;
+            ScoreService = scoreService;
         }
 
         public void SelectCard(ICard card)
@@ -41,15 +44,24 @@ namespace MCG.Model.Domain.Game
                 firstCard.Match();
                 secondCard.Match();
                 OnCardMatched?.Invoke(firstCard, secondCard);
+                ScoreService.AddPoints(1);
+                if (HasGameEnded())
+                    OnGameEnded?.Invoke();
             }
             else
-            {
-                /*
-                firstCard.Hide();
-                secondCard.Hide();
-                */
                 OnCardMismatched?.Invoke(firstCard, secondCard);
+        }
+
+        private bool HasGameEnded()
+        {
+            foreach (ICard card in Board.Cards)
+            {
+                if (card.State == CardState.Empty)
+                    continue; // skip empty slots
+                if (card.State != CardState.Matched)
+                    return false;
             }
+            return true;
         }
 
         public void Reset()

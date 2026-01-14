@@ -1,6 +1,7 @@
 using MCG.Model.Data;
 using MCG.Model.Domain.Cards;
 using MCG.Model.Domain.Game;
+using MCG.Services;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -128,7 +129,6 @@ namespace MCG.View
                 _audioSource.Stop();
             if (_matchCardSound)
                 _audioSource.PlayOneShot(_matchCardSound);
-            //TODO : add score
         }
 
         private void OnCardMismatched(ICard firstCard, ICard secondCard)
@@ -161,7 +161,7 @@ namespace MCG.View
 
         private void OnGameEnded()
         {
-            
+            print("Game Ended!!!");
         }
     }
 }
