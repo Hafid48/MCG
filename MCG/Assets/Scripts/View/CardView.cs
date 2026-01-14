@@ -59,5 +59,10 @@ namespace MCG.View
         {
             _cardImage.sprite = _boardView.CardBackSprite;
         }
+
+        public void PlayMatchEffect()
+        {
+            //TODO: Play some VFX to show match effect
+        }
     }
 }

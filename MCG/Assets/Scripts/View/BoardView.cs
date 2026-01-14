@@ -1,6 +1,7 @@
 using MCG.Model.Data;
 using MCG.Model.Domain.Cards;
 using MCG.Model.Domain.Game;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,8 @@ namespace MCG.View
         private AudioClip _mismatchCardSound;
         [SerializeField]
         private AudioClip _gameEndedSound;
+        [SerializeField]
+        private float _mismatchCardDelay = 0.25f;
         private Transform _boardParent;
         private GridLayoutGroup _gridLayout;
         private AudioSource _audioSource;
@@ -109,17 +112,41 @@ namespace MCG.View
 
         private void OnCardRevealed(ICard card)
         {
-            
+            if (_cardViews.TryGetValue(card, out CardView cardView))
+                cardView.FlipToFront();
+            if (_revealCardSound)
+                _audioSource.PlayOneShot(_revealCardSound);
         }
 
-        private void OnCardsMatched(ICard first, ICard second)
+        private void OnCardsMatched(ICard firstCard, ICard secondCard)
         {
-            
+            if (_cardViews.TryGetValue(firstCard, out CardView firstCardView))
+                firstCardView.PlayMatchEffect();
+            if (_cardViews.TryGetValue(secondCard, out CardView secondCardView))
+                secondCardView.PlayMatchEffect();
+            if (_audioSource.isPlaying)
+                _audioSource.Stop();
+            if (_matchCardSound)
+                _audioSource.PlayOneShot(_matchCardSound);
+            //TODO : add score
         }
 
-        private void OnCardMismatched(ICard first, ICard second)
+        private void OnCardMismatched(ICard firstCard, ICard secondCard)
         {
-            
+            StartCoroutine(HideCardsCoroutine(firstCard, secondCard, _mismatchCardDelay));
+        }
+
+        private IEnumerator HideCardsCoroutine(ICard first, ICard second, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            first.Hide();
+            second.Hide();
+            if (_cardViews.TryGetValue(first, out CardView firstView))
+                firstView.FlipToBack();
+            if (_cardViews.TryGetValue(second, out CardView secondView))
+                secondView.FlipToBack();
+            if (_mismatchCardSound)
+                _audioSource.PlayOneShot(_mismatchCardSound);
         }
 
         private void OnGameStarted()
