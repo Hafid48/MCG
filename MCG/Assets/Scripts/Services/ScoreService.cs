@@ -18,7 +18,7 @@ namespace MCG.Services
             OnScoreChanged?.Invoke(oldScore, Score);
         }
 
-        public void ResetScore()
+        public void Reset()
         {
             int oldScore = Score;
             Score = 0;

@@ -30,5 +30,13 @@ namespace MCG.Model.Domain.Cards
             if (State == CardState.Revealed)
                 State = CardState.Matched;
         }
+
+        /*
+        public void Reset()
+        {
+            if (State != CardState.Empty)
+                State = CardState.Hidden;
+        }
+        */
     }
 }

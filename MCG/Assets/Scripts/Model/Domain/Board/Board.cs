@@ -41,6 +41,20 @@ namespace MCG.Model.Domain.Board
             }
         }
 
+        public void Load(IReadOnlyList<CardDefinition> definitions, IReadOnlyList<CardState> cardStates)
+        {
+            int index = 0;
+            for (int r = 0; r < Rows; r++)
+            {
+                for (int c = 0; c < Columns; c++)
+                {
+                    Cards[r, c] = index < cardStates.Count ? new Card(definitions[index]) : new Card(null);
+                    Cards[r, c].State = cardStates[index];
+                    index++;
+                }
+            }
+        }
+
         public void Shuffle(IList<ICard> cards)
         {
             Random rng = new Random();

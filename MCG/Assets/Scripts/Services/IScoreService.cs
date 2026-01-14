@@ -11,6 +11,6 @@ namespace MCG.Services
 
         void SetPoints(int points);
 
-        void ResetScore();
+        void Reset();
     }
 }

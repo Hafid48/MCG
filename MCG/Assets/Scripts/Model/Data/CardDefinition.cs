@@ -6,8 +6,8 @@ namespace MCG.Model.Data
     public class CardDefinition : ScriptableObject
     {
         [field: SerializeField]
-        public string Id { get; private set; }
+        public string Id { get; set; }
         [field: SerializeField]
-        public Sprite Sprite { get; private set; }
+        public Sprite Sprite { get; set; }
     }
 }

@@ -12,18 +12,23 @@ namespace MCG.Application
         private BoardView _boardView;
         [SerializeField]
         private ScoreView _scoreView;
+        [SerializeField]
+        private SaveLoadView _saveLoadView;
         private IBoard _board;
         private IMemoryGame _memoryGame;
         private IScoreService _scoreService;
+        private ISaveLoadService _saveLoadService;
 
         private void Start()
         {
             _scoreService = new ScoreService();
+            _saveLoadService = new PlayerPrefsSaveLoadService();
             _board = new Board(_boardView.Rows, _boardView.Columns);
             _board.Initialize(_boardView.CardDefinitions);
-            _memoryGame = new MemoryGame(_board, _scoreService);
+            _memoryGame = new MemoryGame(_board, _scoreService, _saveLoadService);
             _boardView.Initialize(_memoryGame);
             _scoreView.Initialize(_scoreService);
+            _saveLoadView.Initialize(_memoryGame);
         }
     }
 }

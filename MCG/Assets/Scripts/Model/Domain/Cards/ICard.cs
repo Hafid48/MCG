@@ -20,5 +20,7 @@ namespace MCG.Model.Domain.Cards
         void Hide();
 
         void Match();
+
+        //void Reset();
     }
 }

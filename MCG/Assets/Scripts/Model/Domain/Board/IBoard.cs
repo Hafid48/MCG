@@ -12,6 +12,8 @@ namespace MCG.Model.Domain.Board
 
         void Initialize(IReadOnlyList<CardDefinition> definitions);
 
+        void Load(IReadOnlyList<CardDefinition> definitions, IReadOnlyList<CardState> cardStates);
+
         void Shuffle(IList<ICard> cards);
 
         ICard GetCard(int row, int column);

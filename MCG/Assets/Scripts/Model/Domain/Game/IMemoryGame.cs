@@ -1,6 +1,8 @@
+using MCG.Model.Data;
 using MCG.Model.Domain.Board;
 using MCG.Model.Domain.Cards;
 using MCG.Services;
+using System.Collections.Generic;
 
 namespace MCG.Model.Domain.Game
 {
@@ -12,10 +14,17 @@ namespace MCG.Model.Domain.Game
     {
         IBoard Board { get; }
         IScoreService ScoreService { get; }
+        ISaveLoadService SaveLoadService { get; }
 
-        void SelectCard(ICard card);
+        void SelectCard(ICard card, bool forceSelect = false);
 
-        void Reset();
+        void Reset(int newRows, int newCols, IReadOnlyList<CardDefinition> newCardDefinitions);
+
+        void Reset(int newRows, int newCols, IReadOnlyList<CardDefinition> newCardDefinitions, IReadOnlyList<CardState> newCardStates);
+
+        void SaveGame();
+
+        void LoadGame();
 
         event CardEventHandler OnCardRevealed;
 

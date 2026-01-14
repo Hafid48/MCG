@@ -156,12 +156,33 @@ namespace MCG.View
 
         private void OnGameReset()
         {
-
+            // reset the sprites
+            foreach (ICard card in _game.Board.Cards)
+            {
+                foreach (CardDefinition cardDefinition in CardDefinitions)
+                {
+                    if (cardDefinition.Id == card.Definition.Id)
+                        card.Definition.Sprite = cardDefinition.Sprite;
+                }
+            }
+            SetupBoardUI();
         }
 
         private void OnGameEnded()
         {
-            print("Game Ended!!!");
+            StartCoroutine(ResetGameCoroutine());
+        }
+
+        private IEnumerator ResetGameCoroutine()
+        {
+            if (_gameEndedSound)
+            {
+                if (_audioSource.isPlaying)
+                    _audioSource.Stop();
+                _audioSource.PlayOneShot(_gameEndedSound);
+                yield return new WaitForSeconds(_gameEndedSound.length);
+            }
+            _game.Reset(Rows, Columns, CardDefinitions);
         }
     }
 }
