@@ -10,7 +10,7 @@ namespace MCG.Model.Domain.Cards
         public Card(CardDefinition definition)
         {
             Definition = definition;
-            State = CardState.Hidden;
+            State = definition == null ? CardState.Empty : CardState.Hidden;
         }
 
         public void Reveal()

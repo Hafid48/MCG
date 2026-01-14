@@ -1,4 +1,5 @@
 using MCG.Model.Domain.Board;
+using MCG.Model.Domain.Cards;
 
 namespace MCG.Model.Domain.Game
 {

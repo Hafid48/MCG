@@ -4,6 +4,7 @@ namespace MCG.Model.Domain.Cards
 {
     public enum CardState
     {
+        Empty,
         Hidden,
         Revealed,
         Matched

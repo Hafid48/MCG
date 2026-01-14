@@ -1,3 +1,7 @@
+using MCG.Model.Data;
+using MCG.Model.Domain.Cards;
+using System.Collections.Generic;
+
 namespace MCG.Model.Domain.Board
 {
     public interface IBoard
@@ -6,9 +10,9 @@ namespace MCG.Model.Domain.Board
         int Columns { get; }
         ICard[,] Cards { get; }
 
-        void Initialize();
+        void Initialize(IReadOnlyList<CardDefinition> definitions);
 
-        void Shuffle();
+        void Shuffle(IList<ICard> cards);
 
         ICard GetCard(int row, int column);
     }

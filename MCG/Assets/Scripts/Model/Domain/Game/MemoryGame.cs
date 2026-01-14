@@ -1,4 +1,5 @@
 using MCG.Model.Domain.Board;
+using MCG.Model.Domain.Cards;
 
 namespace MCG.Model.Domain.Game
 {
@@ -19,7 +20,7 @@ namespace MCG.Model.Domain.Game
 
         public void SelectCard(ICard card)
         {
-            
+            UnityEngine.Debug.Log("Card has been clicked!!!");
         }
 
         public void Reset()
